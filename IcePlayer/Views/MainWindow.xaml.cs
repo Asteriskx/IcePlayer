@@ -1,13 +1,16 @@
-﻿using IcePlayer.Models;
-using MahApps.Metro.Controls;
-
+﻿using System;
 using System.Windows;
+
+using IcePlayer.Models;
+using IcePlayer.ViewModels;
 using System.Threading;
+
+using MahApps.Metro.Controls;
+using MahApps.Metro;
 using System.Windows.Controls.Primitives;
 
-
 namespace IcePlayer.Views
-{
+{ 
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
@@ -29,6 +32,11 @@ namespace IcePlayer.Views
         private bool IncludeGuard;
 
         /// <summary>
+        /// 音量保持用変数
+        /// </summary>
+        private int[] saveVolume = new int[2] {0, 0};
+
+        /// <summary>
         /// MainWindow コンストラクタ
         /// </summary>
         public MainWindow()
@@ -45,6 +53,11 @@ namespace IcePlayer.Views
             // クラス多重生成防止フラグを false に
             this.IncludeGuard = false;
 
+        }
+
+        private void IceMenu()
+        {
+            ((MainWindowViewModel)this.DataContext).IsMenuShown = false;
         }
 
         #region ボタン コードビハインド
@@ -151,19 +164,28 @@ namespace IcePlayer.Views
         /// <param name="e"></param>
         private void VolumeButton_Click(object sender, RoutedEventArgs e)
         {
-            const int    MuteVol       = 0;
-            ToggleButton tgl           = sender as ToggleButton;
-            int          beforeVol     = ( int )VolumeBar.Value;
+            const int MuteVol = 0;
+            ToggleButton tgl = (ToggleButton)sender;
+            int beforeVol = (int)VolumeBar.Value;
+
+            saveVolume[0] = beforeVol;
 
             if (true == tgl.IsChecked)
             {
-                _iPlayer.CurrentVolume( MuteVol );
+                // 値の保持
+                saveVolume[1] = saveVolume[0];
+
+                _iPlayer.CurrentVolume(MuteVol);
+                ShowVolume.Content = MuteVol;
+                VolumeBar.Value = MuteVol;
                 status.Content = "Muted...";
             }
             else
             {
-                _iPlayer.CurrentVolume( beforeVol );
-                status.Content = "UnMuted...";
+                _iPlayer.CurrentVolume(saveVolume[1]);
+                 ShowVolume.Content = saveVolume[1];
+                 VolumeBar.Value = saveVolume[1];
+                status.Content = "unMuted...";
             }
         }
 
