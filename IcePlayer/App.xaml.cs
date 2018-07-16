@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-using Livet;
 using IcePlayer.Splash;
 
 namespace IcePlayer
@@ -25,7 +24,6 @@ namespace IcePlayer
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            DispatcherHelper.UIDispatcher = Dispatcher;
             //  iSplash = new IceSplashControl();
             // iSplash.Show();
 

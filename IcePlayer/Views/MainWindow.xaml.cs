@@ -10,208 +10,163 @@ using MahApps.Metro;
 using System.Windows.Controls.Primitives;
 
 namespace IcePlayer.Views
-{ 
-    /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
-    /// </summary>
-    public partial class MainWindow : MetroWindow
-    {
-        /// <summary>
-        /// iTunes クラスインスタンス
-        /// </summary>
-        private iTunes _iPlayer;
+{
+	/// <summary>
+	/// MainWindow.xaml の相互作用ロジック
+	/// </summary>
+	public partial class MainWindow : MetroWindow
+	{
+		/// <summary>
+		/// スプラッシュウィンドウの表示時間
+		/// </summary>
+		private static readonly int WaitSplash = 2000;
 
-        /// <summary>
-        /// スプラッシュウィンドウの表示時間
-        /// </summary>
-        private static readonly int WaitSplash = 3000;
+		/// <summary>
+		/// 音量保持用変数
+		/// </summary>
+		private int[] saveVolume = new int[2] { 0, 0 };
 
-        /// <summary>
-        /// クラス多重生成防止フラグ
-        /// </summary>
-        private bool IncludeGuard;
+		/// <summary>
+		/// MainWindow コンストラクタ
+		/// </summary>
+		public MainWindow()
+		{
+			// Initialize
+			InitializeComponent();
 
-        /// <summary>
-        /// 音量保持用変数
-        /// </summary>
-        private int[] saveVolume = new int[2] {0, 0};
+			// スプラッシュウィンドウの待ち時間
+			Thread.Sleep(WaitSplash);
 
-        /// <summary>
-        /// MainWindow コンストラクタ
-        /// </summary>
-        public MainWindow()
-        {
-            // Initialize
-            InitializeComponent();
+			// IcePlayer のウィンドウ移動(ドラッグ) を可能にする
+			this.MouseLeftButtonDown += (sender, e) => this.DragMove();
+		}
 
-            // スプラッシュウィンドウの待ち時間
-            Thread.Sleep( WaitSplash );
+		#region Methods
 
-            // IcePlayer のウィンドウ移動(ドラッグ) を可能にする
-            this.MouseLeftButtonDown += (sender, e) => this.DragMove();
+		/// <summary>
+		/// プレイヤーを選択します
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SelectPlayer_Click(object sender, RoutedEventArgs e)
+		{
+		}
 
-            // クラス多重生成防止フラグを false に
-            this.IncludeGuard = false;
+		/// <summary>
+		/// 再生中の曲情報を Flyout にて表示する処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TrackInfo_Click(object sender, RoutedEventArgs e) => this.flyout.IsOpen = true;
 
-        }
+		/// <summary>
+		/// 再生ボタンが押下された時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PlayButton_Click(object sender, RoutedEventArgs e)
+		{
+			ToggleButton tgl = (ToggleButton)sender;
 
-        private void IceMenu()
-        {
-            ((MainWindowViewModel)this.DataContext).IsMenuShown = false;
-        }
+			// TODO : 再生・停止の動作
+			status.Content = ((bool)tgl.IsChecked) ? "Playing..." : "Pausing...";
+		}
 
-        #region ボタン コードビハインド
-        private void iTunes_Click(object sender, RoutedEventArgs e)
-        {
-            // 1回きりの√
-            if (false == IncludeGuard)
-            {
-                // iTunes インスタンスを生成
-                this._iPlayer = iTunes.GetInstance();
+		/// <summary>
+		/// 巻き戻しボタンが押下された時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SkipBackwardButton_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO : 巻き戻し時の動作
+			status.Content = "Skipping Backward...";
+		}
 
-                // iTunes 起動時、オーディオプレーヤーのデフォルト音量を設定
-                this.VolumeBar.Value = _iPlayer.GetVolume;
+		/// <summary>
+		/// 早送りボタンが押下された時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FastForwardButton_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO : 早送り時の動作
+			status.Content = "FastForward...";
+		}
 
-                IncludeGuard = true;
-            }
-            else
-            {
-                // Nothing.
-            }
+		/// <summary>
+		/// スキップボタンが押下された時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SkipForwardButton_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO : スキップ時の動作
+			status.Content = "Skipping Forward...";
+		}
 
-            CurrentTrackTime.Value = _iPlayer.CurrentPosition();
-        }
+		/// <summary>
+		/// 前トラックに戻したい時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RewindButton_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO : 戻し時の動作
+			status.Content = "Rewind...";
+		}
 
-        /// <summary>
-        /// 再生中の曲情報を Flyout にて表示する処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TrackInfo_Click(object sender, RoutedEventArgs e)
-        {
-            this.flyout.IsOpen = true;
-        }
+		/// <summary>
+		/// 音量ボタンが押下された時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void VolumeButton_Click(object sender, RoutedEventArgs e)
+		{
+			const int MuteVol = 0;
+			ToggleButton tgl = (ToggleButton)sender;
+			int beforeVol = (int)VolumeBar.Value;
 
-        /// <summary>
-        /// 再生ボタンが押下された時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleButton tgl = (ToggleButton)sender;
+			saveVolume[0] = beforeVol;
 
-            if( true == tgl.IsChecked )
-            {
-                _iPlayer.Play();
-                status.Content = "Playing...";
-            }
-            else
-            {
-                _iPlayer.Pause();
-                status.Content = "Pausing...";
-            }
-        }
+			if ((bool)tgl.IsChecked)
+			{
+				// 値の保持
+				saveVolume[1] = saveVolume[0];
 
-        /// <summary>
-        /// 巻き戻しボタンが押下された時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SkipBackwardButton_Click(object sender, RoutedEventArgs e)
-        {
-            status.Content = "Skipping Backward...";
-            _iPlayer.PreviousTrack();
-        }
+				ShowVolume.Content = MuteVol;
+				VolumeBar.Value = MuteVol;
+				status.Content = "Muted...";
+			}
+			else
+			{
+				// TODO : 現在の音量を設定
+				ShowVolume.Content = saveVolume[1];
+				VolumeBar.Value = saveVolume[1];
+				status.Content = "unMuted...";
+			}
+		}
 
-        /// <summary>
-        /// 早送りボタンが押下された時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FastForwardButton_Click(object sender, RoutedEventArgs e)
-        {
-            status.Content = "FastForward...";
-            _iPlayer.FastForward();
-        }
+		/// <summary>
+		/// 音量調節用スライダーの値が変更された時
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			// TODO : 現在の音量を取得
+			ShowVolume.Content = (int)VolumeBar.Value;
+		}
 
-        /// <summary>
-        /// スキップボタンが押下された時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SkipForwardButton_Click(object sender, RoutedEventArgs e)
-        {
-            status.Content = "Skipping Forward...";
-            _iPlayer.NextTrack();
-        }
+		/// <summary>
+		/// 再生中の曲の経過時間を表すプログレスバー
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MetroProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+		}
 
-        /// <summary>
-        /// 前トラックに戻したい時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RewindButton_Click(object sender, RoutedEventArgs e)
-        {
-            status.Content = "Rewind...";
-            _iPlayer.Rewind();
-        }
-
-        /// <summary>
-        /// 音量ボタンが押下された時の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void VolumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            const int MuteVol = 0;
-            ToggleButton tgl = (ToggleButton)sender;
-            int beforeVol = (int)VolumeBar.Value;
-
-            saveVolume[0] = beforeVol;
-
-            if (true == tgl.IsChecked)
-            {
-                // 値の保持
-                saveVolume[1] = saveVolume[0];
-
-                _iPlayer.CurrentVolume(MuteVol);
-                ShowVolume.Content = MuteVol;
-                VolumeBar.Value = MuteVol;
-                status.Content = "Muted...";
-            }
-            else
-            {
-                _iPlayer.CurrentVolume(saveVolume[1]);
-                 ShowVolume.Content = saveVolume[1];
-                 VolumeBar.Value = saveVolume[1];
-                status.Content = "unMuted...";
-            }
-        }
-
-        /// <summary>
-        /// 音量調節用スライダーの値が変更された時
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _iPlayer.CurrentVolume( VolumeBar.Value );
-            ShowVolume.Content = ( int )VolumeBar.Value;
-
-            // Console.WriteLine($"Volume value ; {VolumeBar.Value}");
-        }
-
-        /// <summary>
-        /// 再生中の曲の経過時間を表すプログレスバー
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MetroProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            //CurrentTrackTime.Value = _iPlayer.CurrentPosition();
-            //Console.WriteLine($"Time ; {CurrentTrackTime.Value}");
-        }
-        #endregion
-    }
+		#endregion
+	}
 }

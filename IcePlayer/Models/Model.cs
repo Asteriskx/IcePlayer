@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Livet;
-
-namespace IcePlayer.Models
+﻿namespace IcePlayer.Models
 {
-    public class Model : NotificationObject
-    {
-        /*
-         * NotificationObjectはプロパティ変更通知の仕組みを実装したオブジェクトです。
-         */
-    }
+	/// <summary>
+	/// IcePlayer Model 層 管理クラス
+	/// </summary>
+	public class Models
+	{
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		public Models() { }
+	}
 }

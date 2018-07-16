@@ -4,7 +4,6 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:IcePlayer.Views"
         xmlns:vm="clr-namespace:IcePlayer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="IcePlayer.Views.MainWindow"
@@ -26,35 +25,15 @@
     <!-- Title Bar 右側のデザイン -->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="iTunes" 
-                Command="{Binding SelectPlayerCommand}" CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}" Click="iTunes_Click"/>
+            <Button Content="SelectPlayer" 
+                Command="{Binding SelectPlayerCommand}" CommandParameter="{Binding Content, RelativeSource={RelativeSource Self}}" Click="SelectPlayer_Click"/>
             <Button Content="TrackInfo" Click="TrackInfo_Click"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:ViewModels/>
     </Controls:MetroWindow.DataContext>
-
-    <i:Interaction.Triggers>
-
-        <!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
-        <!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
-        <!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています -->
-
-        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
-        <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
-        </i:EventTrigger>
-
-        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
-        <i:EventTrigger EventName="Closed">
-            <l:DataContextDisposeAction/>
-        </i:EventTrigger>
-
-        <!--WindowのCloseキャンセル処理に対応する場合は、WindowCloseCancelBehaviorの使用を検討してください-->
-
-    </i:Interaction.Triggers>
 
     <!--Grid Area-->
     <Grid Background="Black" >
@@ -142,7 +121,7 @@
         <Label Width="400" Margin="40,451,50,84" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding MediaItem.PlayedCount}" FontSize="14" ContentStringFormat="PlayedCount : {0}"/>
 
         <!-- CurrentTrack Time -->
-        <Label Margin="297,511,99,34" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding MediaItem.Duration}" FontSize="14" ContentStringFormat="Time : {0}"/>
+        <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding MediaItem.Duration}" FontSize="14" ContentStringFormat="Time : {0}"/>
 
         <!-- VolumeSlider Info -->
         <Slider x:Name="VolumeBar" Style="{DynamicResource MetroSlider}" Value="{Binding VolumeBar.Value}" Margin="302,481,46,76" Width="Auto" ValueChanged="Slider_ValueChanged"/>

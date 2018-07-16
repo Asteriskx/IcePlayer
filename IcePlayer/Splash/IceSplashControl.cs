@@ -4,54 +4,67 @@ using System.Windows.Threading;
 
 namespace IcePlayer.Splash
 {
-    /// <summary>
-    /// IcePlayer スプラッシュウィンドウクラス
-    /// </summary>
-    public partial class IceSplashControl : Window, INotifyPropertyChanged
-    {
-        // プロパティ変更通知
-        public event PropertyChangedEventHandler PropertyChanged;
-        
-        // コンストラクタ
-        private IceSplashControl(){ }
+	/// <summary>
+	/// IcePlayer スプラッシュウィンドウクラス
+	/// </summary>
+	public partial class IceSplashControl : Window, INotifyPropertyChanged
+	{
+		/// <summary>
+		/// プロパティ変更通知
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        // プロパティ変更
-        public void OnPropertyChanged( string name )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( name ));
-        }
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		private IceSplashControl() { }
 
-        // 表示メッセージ変更プロパティ
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            set
-            {
-                _message = value;
-                OnPropertyChanged("Message");
-                DoEvents();
-            }
-        }
+		/// <summary>
+		/// プロパティ変更
+		/// </summary>
+		/// <param name="name"></param>
+		public void OnPropertyChanged(string name) => 
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        // 実行イベント
-        public void DoEvents()
-        {
-            DispatcherFrame frame = new DispatcherFrame();
+		/// <summary>
+		/// 表示メッセージ変更プロパティ
+		/// </summary>
+		private string _message;
+		public string Message
+		{
+			get { return _message; }
+			set
+			{
+				_message = value;
+				OnPropertyChanged("Message");
+				DoEvents();
+			}
+		}
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background,
-                new DispatcherOperationCallback( ExitFrames ), frame);
+		/// <summary>
+		/// 実行イベント
+		/// </summary>
+		public void DoEvents()
+		{
+			DispatcherFrame frame = new DispatcherFrame();
 
-            Dispatcher.PushFrame( frame );
-        }
+			Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background,
+				new DispatcherOperationCallback(ExitFrames), frame);
 
-        // スプラッシュウィンドウ 抜け出し
-        public object ExitFrames( object frame )
-        {
-            ( frame as DispatcherFrame ).Continue = false;
-            return null;
-        }
-    }
+			Dispatcher.PushFrame(frame);
+		}
+
+		/// <summary>
+		/// スプラッシュウィンドウ 抜け出し
+		/// </summary>
+		/// <param name="frame"></param>
+		/// <returns></returns>
+		public object ExitFrames(object frame)
+		{
+			(frame as DispatcherFrame).Continue = false;
+			return null;
+		}
+	}
 }
 
 
