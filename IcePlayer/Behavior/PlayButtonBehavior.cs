@@ -19,6 +19,11 @@ namespace IcePlayer.Behavior
 		/// <summary>
 		/// 
 		/// </summary>
+		private AimpProperties _Properties { get; set; } = new AimpProperties();
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
@@ -45,11 +50,17 @@ namespace IcePlayer.Behavior
 
 			if ((bool)tgl.IsChecked)
 			{
-				this._Commands.Play();
+				if (_Properties.IsRunning)
+				{
+					this._Commands.Play();
+				}
 			}
 			else
 			{
-				this._Commands.Pause();
+				if (_Properties.IsRunning)
+				{
+					this._Commands.PlayPause();
+				}
 			}
 
 			var window = (MainWindow)App.Current.MainWindow;

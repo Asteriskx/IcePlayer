@@ -19,6 +19,11 @@ namespace IcePlayer.Behavior
 		/// <summary>
 		/// 
 		/// </summary>
+		private AimpProperties _Properties { get; set; } = new AimpProperties();
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
@@ -41,7 +46,10 @@ namespace IcePlayer.Behavior
 		/// <param name="e"></param>
 		private void SkipForward(object sender, EventArgs e)
 		{
-			this._Commands.Next();
+			if (_Properties.IsRunning) 
+			{
+				this._Commands.Next();
+			}
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = "Skipping Forward...";
 		}

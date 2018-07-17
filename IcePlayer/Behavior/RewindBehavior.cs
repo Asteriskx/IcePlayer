@@ -19,6 +19,11 @@ namespace IcePlayer.Behavior
 		/// <summary>
 		/// 
 		/// </summary>
+		private AimpProperties _Properties { get; set; } = new AimpProperties();
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
@@ -41,7 +46,10 @@ namespace IcePlayer.Behavior
 		/// <param name="e"></param>
 		private void Rewind(object sender, EventArgs e)
 		{
-			this._Commands.Prev();
+			if (_Properties.IsRunning)
+			{
+				this._Commands.Prev();
+			}
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = "Rewind...";
 		}

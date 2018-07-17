@@ -39,6 +39,11 @@
                     <ice:TrackInfoBehavior/>
                 </i:Interaction.Behaviors>
             </Button>
+            <Button Content="NowPlaying">
+                <i:Interaction.Behaviors>
+                    <ice:NowPlayingBehavior/>
+                </i:Interaction.Behaviors>
+            </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -81,7 +86,6 @@
                 </Rectangle>
             </ToggleButton>
 
-            <!-- *** 再生ボタン ⇔ 停止ボタンを切り替える為に、Trigger 辺りごにょごにょしようとしてる。 2017-4-23 **************************************************************************************** -->
             <ToggleButton Command="{Binding CurrentTrackInfoComamnd}" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <ice:PlayButtonBehavior/>
@@ -92,7 +96,6 @@
                     </Rectangle.Fill>
                 </Rectangle>
             </ToggleButton>
-            <!-- ********************************************************************************************************************************************************************************* -->
 
             <ToggleButton x:Name="FastForwardButton" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>

@@ -142,6 +142,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
@@ -153,6 +156,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Twist, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Twist.4.0.0\lib\netstandard2.0\Twist.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>packages\Unity.Abstractions.3.3.0\lib\net47\Unity.Abstractions.dll</HintPath>
@@ -187,6 +193,7 @@
     </Compile>
     <Compile Include="Behavior\FastForwardBehavior.cs" />
     <Compile Include="Behavior\MetroProgressBarBehavior.cs" />
+    <Compile Include="Behavior\NowPlayingBehavior.cs" />
     <Compile Include="Behavior\PlayButtonBehavior.cs" />
     <Compile Include="Behavior\RewindBehavior.cs" />
     <Compile Include="Behavior\SelectPlayerBehavior.cs" />

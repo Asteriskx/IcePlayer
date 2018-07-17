@@ -18,6 +18,11 @@ namespace IcePlayer.Behavior
 		/// <summary>
 		/// 
 		/// </summary>
+		private AimpProperties _Properties { get; set; } = new AimpProperties();
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
@@ -38,6 +43,12 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SelectPlayer(object sender, EventArgs e) => this._Commands.StartAimp();
+		private void SelectPlayer(object sender, EventArgs e)
+		{
+			if (!_Properties.IsRunning)
+			{
+				this._Commands.StartAimp();
+			}
+		}
 	}
 }
