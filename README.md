@@ -33,7 +33,7 @@ SOFTWARE.
 
 </details>
 
-## License for Legato
+## License for Legato, AlbumArtExtraction
 
 <details>
 
