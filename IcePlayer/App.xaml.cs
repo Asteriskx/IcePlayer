@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿using System.Threading;
 using System.Windows;
-
-using IcePlayer.Splash;
 
 namespace IcePlayer
 {
@@ -14,33 +8,22 @@ namespace IcePlayer
     /// </summary>
     public partial class App : Application
     {
-        // private IceSplashControl _iSplash;
-        // public  IceSplashControl iSplash { get; private set; }
-
-        public App() : base()
+		/// <summary>
+		/// 
+		/// </summary>
+		public App() : base()
         {
             Startup += Application_Startup;
-        }
+			Thread.Sleep(3000);
+		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //  iSplash = new IceSplashControl();
-            // iSplash.Show();
-
-            // AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
-
-        //集約エラーハンドラ
-        //private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        //{
-        //    //TODO:ロギング処理など
-        //    MessageBox.Show(
-        //        "不明なエラーが発生しました。アプリケーションを終了します。",
-        //        "エラー",
-        //        MessageBoxButton.OK,
-        //        MessageBoxImage.Error);
-        //
-        //    Environment.Exit(1);
-        //}
     }
 }

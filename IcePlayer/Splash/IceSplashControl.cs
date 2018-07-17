@@ -30,6 +30,10 @@ namespace IcePlayer.Splash
 		/// 表示メッセージ変更プロパティ
 		/// </summary>
 		private string _message;
+
+		/// <summary>
+		///
+		/// </summary>
 		public string Message
 		{
 			get { return _message; }
