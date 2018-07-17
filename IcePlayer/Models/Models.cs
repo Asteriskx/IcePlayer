@@ -12,6 +12,9 @@ namespace IcePlayer.Models
 	/// </summary>
 	public class Models
 	{
+
+		#region Properties
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -22,13 +25,21 @@ namespace IcePlayer.Models
 		/// </summary>
 		public AimpObserver Observer { get; set; } = new AimpObserver();
 
+		#endregion Properties
+
+		#region Constractor
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public Models() { }
 
+		#endregion Constractor
+
+		#region Methods
+
 		/// <summary>
-		/// 
+		/// AlbumArtExtractor 経由でアートワークを取得します。
 		/// </summary>
 		/// <returns></returns>
 		public BitmapImage GetArtwork()
@@ -65,5 +76,8 @@ namespace IcePlayer.Models
 				return null;
 			}
 		}
+
+		#endregion Methods
+
 	}
 }

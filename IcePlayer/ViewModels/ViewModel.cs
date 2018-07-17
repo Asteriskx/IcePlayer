@@ -10,67 +10,79 @@ namespace IcePlayer.ViewModels
 	/// </summary>
 	public class ViewModels : BindableBase
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public Models.Models Model { get; set; }
 
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public ViewModels() => this.Model = new Models.Models();
+		#region Fields
 
 		/// <summary>
 		/// 
 		/// </summary>
-		private TrackInfo _CurrentTrackInfo;
+		private DelegateCommand _currentTrackInfoComamnd;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private TrackInfo _currentTrackInfo;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private BitmapImage _currentArtwork;
+
+		#endregion Fields
+
+		#region Properties
+
+		/// <summary>
+		/// Model 層 プロパティ
+		/// </summary>
+		public Models.Models Model { get; set; } = new Models.Models();
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public TrackInfo CurrentTrackInfo
 		{
-			get { return this._CurrentTrackInfo; }
-			set { this.SetProperty(ref this._CurrentTrackInfo, value); }
+			get { return this._currentTrackInfo; }
+			set { this.SetProperty(ref this._currentTrackInfo, value); }
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private BitmapImage _CurrentArtwork;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public BitmapImage CurrentArtwork
 		{
-			get { return this._CurrentArtwork; }
-			set { this.SetProperty(ref this._CurrentArtwork, value); }
+			get { return this._currentArtwork; }
+			set { this.SetProperty(ref this._currentArtwork, value); }
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private DelegateCommand _CurrentTrackInfoComamnd;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public DelegateCommand CurrentTrackInfoComamnd
 		{
-			get
-			{
-				return this._CurrentTrackInfoComamnd = this._CurrentTrackInfoComamnd ?? new DelegateCommand(GetCurrentTrackInfo);
-			}
+			get { return this._currentTrackInfoComamnd = this._currentTrackInfoComamnd ?? new DelegateCommand(GetCurrentTrackInfo); }
 		}
 
+		#endregion Properties
+
+		#region Constractor
+
 		/// <summary>
-		/// 
+		/// コンストラクタ
 		/// </summary>
-		private void GetCurrentTrackInfo()
-		{
+		public ViewModels() { }
+
+		#endregion Constractor
+
+		#region Methods
+
+		/// <summary>
+		/// 現在のトラック情報（曲情報、アートワーク）を取得します
+		/// </summary>
+		private void GetCurrentTrackInfo() =>
 			(this.CurrentTrackInfo, this.CurrentArtwork) = (this.Model.Properties.CurrentTrack, this.Model.GetArtwork());
-		}
+
+		#endregion Methods
 
 	}
 }

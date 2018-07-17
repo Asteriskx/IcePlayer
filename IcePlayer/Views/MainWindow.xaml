@@ -148,6 +148,7 @@
         <!-- Title Info -->
         <Separator Width="400" Margin="45,362,45,160"/>
         <Label Width="400" Margin="41,361,49,176" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Title}" FontSize="14" ContentStringFormat="Title : {0}"/>
+        
         <!-- Artist Info -->
         <Separator Width="400" Margin="44,391,46,129"/>
         <Label Width="400" Margin="42,390,48,146" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Artist}" FontSize="14" ContentStringFormat="Artist : {0}"/>
@@ -156,12 +157,12 @@
         <Separator Width="400" Margin="45,429,45,107"/>
         <Label Width="400" Margin="42,421,48,115" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Album}" FontSize="14" ContentStringFormat="Album : {0}"/>
 
-        <!-- PlayedCount Info -->
+        <!-- Genre Info -->
         <Separator Width="400" Margin="45,452,45,69"/>
-        <Label Width="400" Margin="40,451,50,84" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding MediaItem.PlayedCount}" FontSize="14" ContentStringFormat="PlayedCount : {0}"/>
+        <Label Width="400" Margin="40,451,50,84" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Genre}" FontSize="14" ContentStringFormat="Genre : {0}"/>
 
         <!-- CurrentTrack Time -->
-        <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Duration}" FontSize="14" ContentStringFormat="Time : {0}"/>
+        <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Duration}" FontSize="14" ContentStringFormat="Time : {}{mm:ss}"/>
 
         <!-- CurrentVolume Show -->
         <Label x:Name="ShowVolume" Margin="298,493,126,54" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding ShowVolume.Value}" FontSize="14" ContentStringFormat="Vol : {0} %"/>

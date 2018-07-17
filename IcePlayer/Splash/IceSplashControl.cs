@@ -9,22 +9,8 @@ namespace IcePlayer.Splash
 	/// </summary>
 	public partial class IceSplashControl : Window, INotifyPropertyChanged
 	{
-		/// <summary>
-		/// プロパティ変更通知
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
 
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		private IceSplashControl() { }
-
-		/// <summary>
-		/// プロパティ変更
-		/// </summary>
-		/// <param name="name"></param>
-		public void OnPropertyChanged(string name) => 
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+		#region Properties
 
 		/// <summary>
 		/// 表示メッセージ変更プロパティ
@@ -32,7 +18,7 @@ namespace IcePlayer.Splash
 		private string _message;
 
 		/// <summary>
-		///
+		/// 表示メッセージ変更プロパティ
 		/// </summary>
 		public string Message
 		{
@@ -44,6 +30,35 @@ namespace IcePlayer.Splash
 				DoEvents();
 			}
 		}
+
+		#endregion Properties
+
+		#region Event
+
+		/// <summary>
+		/// プロパティ変更通知
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion Event
+
+		#region Constractor
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		private IceSplashControl() { }
+
+		#endregion Constractor
+
+		#region Methods
+
+		/// <summary>
+		/// プロパティ変更
+		/// </summary>
+		/// <param name="name"></param>
+		public void OnPropertyChanged(string name) =>
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
 		/// <summary>
 		/// 実行イベント
@@ -68,8 +83,8 @@ namespace IcePlayer.Splash
 			(frame as DispatcherFrame).Continue = false;
 			return null;
 		}
+
+		#endregion Methods
+
 	}
 }
-
-
-
