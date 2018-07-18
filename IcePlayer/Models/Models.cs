@@ -3,6 +3,7 @@ using Legato;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace IcePlayer.Models
@@ -39,10 +40,10 @@ namespace IcePlayer.Models
 		#region Methods
 
 		/// <summary>
-		/// AlbumArtExtractor 経由でアートワークを取得します。
+		/// AlbumArtExtractor 経由でアルバムアートを取得します。
 		/// </summary>
-		/// <returns></returns>
-		public BitmapImage GetArtwork()
+		/// <returns> 取得されたアルバムアート(BitmapImage) </returns>
+		public BitmapImage GetAlbumArt()
 		{
 			try
 			{
@@ -56,17 +57,17 @@ namespace IcePlayer.Models
 				{
 					bitmap.Save(ms, ImageFormat.Bmp);
 					ms.Position = 0;
-					var bitmapImage = new BitmapImage();
+					var image = new BitmapImage();
 
-					bitmapImage.BeginInit();
-					bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-					bitmapImage.CreateOptions = BitmapCreateOptions.None;
+					image.BeginInit();
+					image.CacheOption = BitmapCacheOption.OnLoad;
+					image.CreateOptions = BitmapCreateOptions.None;
 
-					bitmapImage.StreamSource = ms;
-					bitmapImage.EndInit();
-					bitmapImage.Freeze();
+					image.StreamSource = ms;
+					image.EndInit();
+					image.Freeze();
 
-					return bitmapImage;
+					return image;
 				}
 			}
 			catch (Exception ex)
@@ -75,6 +76,19 @@ namespace IcePlayer.Models
 				Console.WriteLine(ex);
 				return null;
 			}
+		}
+
+		/// <summary>
+		///  非同期にて曲の再生時間を取得します
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		public async Task<string> GetCurrentTrackPositionAsync(int position)
+		{
+			var totalSec = position / 1000;
+			var min = totalSec / 60;
+			var sec = totalSec % 60;
+			return $"{min:D2}:{sec:D2}";
 		}
 
 		#endregion Methods

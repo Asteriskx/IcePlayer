@@ -54,8 +54,8 @@
     <!--Grid Area-->
     <Grid Background="Black" >
 
-        <!-- ArtWorks -->
-        <Image x:Name="image" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentArtwork}" />
+        <!-- AlbumArt -->
+        <Image x:Name="image" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}" />
 
         <DockPanel>
             <StatusBar Height="24" Margin="0,10,0,0" x:Name="StatusBar" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Background="#FF5F5F5F">
@@ -134,13 +134,6 @@
             </Rectangle>
         </ToggleButton>
 
-        <!-- ProgressBar Info -->
-        <Controls:MetroProgressBar x:Name="CurrentTrackTime" Width="400" Margin="45,537,45,28" Height="2" Value="{Binding CurrentTrackTime.Value}" Foreground="#FF3C4142">
-            <i:Interaction.Behaviors>
-                <ice:MetroProgressBarBehavior/>
-            </i:Interaction.Behaviors>
-        </Controls:MetroProgressBar>
-
         <!-- VolumeSlider Info -->
         <Slider x:Name="VolumeBar" Style="{DynamicResource MetroSlider}" Value="{Binding VolumeBar.Value}" Margin="302,481,46,76" Width="Auto">
             <i:Interaction.Behaviors>
@@ -165,7 +158,7 @@
         <Label Width="400" Margin="40,451,50,84" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Genre}" FontSize="14" ContentStringFormat="Genre : {0}"/>
 
         <!-- CurrentTrack Time -->
-        <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Duration}" FontSize="14" ContentStringFormat="Time : {}{mm:ss}"/>
+        <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackPosition}" FontSize="14" ContentStringFormat="Time : {0}"/>
 
         <!-- CurrentVolume Show -->
         <Label x:Name="ShowVolume" Margin="298,493,126,54" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding ShowVolume.Value}" FontSize="14" ContentStringFormat="Vol : {0} %"/>

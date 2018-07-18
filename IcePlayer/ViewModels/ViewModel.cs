@@ -27,7 +27,12 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// 
 		/// </summary>
-		private BitmapImage _currentArtwork;
+		private string _currentTrackPosition;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private BitmapImage _currentAlbumArt;
 
 		#endregion Fields
 
@@ -50,10 +55,19 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// 
 		/// </summary>
-		public BitmapImage CurrentArtwork
+		public BitmapImage CurrentAlbumArt
 		{
-			get { return this._currentArtwork; }
-			set { this.SetProperty(ref this._currentArtwork, value); }
+			get { return this._currentAlbumArt; }
+			set { this.SetProperty(ref this._currentAlbumArt, value); }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string CurrentTrackPosition
+		{
+			get { return this._currentTrackPosition; }
+			set { this.SetProperty(ref this._currentTrackPosition, value); }
 		}
 
 		/// <summary>
@@ -71,27 +85,38 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public ViewModels() =>
-			this.Model.Observer.CurrentTrackChanged += async (track) => await this.UpdateAsync(track);
+		public ViewModels()
+		{
+			this.Model.Observer.CurrentTrackChanged += async (track) => await this._UpdateAsync(track);
+			this.Model.Observer.PositionPropertyChanged += async (position) => await this._PositionPropertyChangedAsync(position);
+		}
 
 		#endregion Constractor
 
 		#region Methods
 
 		/// <summary>
-		/// 現在のトラック情報（曲情報、アートワーク）を取得します
+		/// 現在のトラック情報（曲情報、アルバムアート）を取得します
 		/// </summary>
 		private void GetCurrentTrackInfo() =>
-			(this.CurrentTrackInfo, this.CurrentArtwork) = (this.Model.Properties.CurrentTrack, this.Model.GetArtwork());
+			(this.CurrentTrackInfo, this.CurrentAlbumArt) = (this.Model.Properties.CurrentTrack, this.Model.GetAlbumArt());
 		
 		/// <summary>
 		/// イベント発火時、非同期にてトラック情報を更新します
 		/// </summary>
 		/// <param name="track"></param>
 		/// <returns></returns>
-		private async Task UpdateAsync(TrackInfo track) =>
-			(this.CurrentTrackInfo, this.CurrentArtwork) = (track, this.Model.GetArtwork());
+		private async Task _UpdateAsync(TrackInfo track) =>
+			(this.CurrentTrackInfo, this.CurrentAlbumArt) = (track, this.Model.GetAlbumArt());
 
+		/// <summary>
+		/// 非同期にて曲の再生時間を更新します
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		private async Task _PositionPropertyChangedAsync(int position) =>
+			this.CurrentTrackPosition = await this.Model.GetCurrentTrackPositionAsync(position);
+		
 		#endregion Methods
 
 	}

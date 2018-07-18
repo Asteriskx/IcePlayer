@@ -192,7 +192,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behavior\FastForwardBehavior.cs" />
-    <Compile Include="Behavior\MetroProgressBarBehavior.cs" />
     <Compile Include="Behavior\NowPlayingBehavior.cs" />
     <Compile Include="Behavior\PlayButtonBehavior.cs" />
     <Compile Include="Behavior\RewindBehavior.cs" />
