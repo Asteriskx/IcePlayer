@@ -11,7 +11,25 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class VolumeSliderBehavior : Behavior<Slider>
 	{
+		#region Property
+
+		/// <summary>
+		/// 
+		/// </summary>
 		private AimpCommands _Commands { get; set; } = new AimpCommands();
+
+		#endregion Peoperty
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public VolumeSliderBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
 
 		/// <summary>
 		/// 
@@ -19,7 +37,7 @@ namespace IcePlayer.Behavior
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.ValueChanged += VolumeSlider_ValueChanged;
+			this.AssociatedObject.ValueChanged += this._VolumeSlider_ValueChanged;
 		}
 
 		/// <summary>
@@ -28,19 +46,28 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.ValueChanged -= VolumeSlider_ValueChanged;
+			this.AssociatedObject.ValueChanged -= this._VolumeSlider_ValueChanged;
 		}
+
+		#endregion Attached / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 音量調節用スライダーの値が変更された時
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		private async void _VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			// TODO : 現在の音量を取得
 			var window = (MainWindow)App.Current.MainWindow;
+
+			await new Models.Model().GetCurrentVolumeAsync((int)window.VolumeBar.Value);
+
 			window.ShowVolume.Content = (int)window.VolumeBar.Value;
 		}
+
+		#endregion Method
 	}
 }

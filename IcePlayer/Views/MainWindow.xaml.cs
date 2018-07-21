@@ -7,20 +7,17 @@ namespace IcePlayer.Views
 	/// </summary>
 	public partial class MainWindow : MetroWindow
 	{
-
-		#region Constractor
+		#region Constructor
 
 		/// <summary>
-		/// Constractor
+		/// Constructor
 		/// </summary>
 		public MainWindow()
 		{
 			this.InitializeComponent();
 			this.DataContext = new ViewModels.ViewModels();
-			this.MouseLeftButtonDown += (s, e) => this.DragMove();
 		}
 
-		#endregion Constractor
-
+		#endregion Constructor
 	}
 }

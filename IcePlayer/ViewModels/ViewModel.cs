@@ -11,13 +11,7 @@ namespace IcePlayer.ViewModels
 	/// </summary>
 	public class ViewModels : BindableBase
 	{
-
 		#region Fields
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private DelegateCommand _currentTrackInfoComamnd;
 
 		/// <summary>
 		/// 
@@ -27,12 +21,22 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// 
 		/// </summary>
-		private string _currentTrackPosition;
+		private DelegateCommand _currentTrackInfoComamnd;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		private BitmapImage _currentAlbumArt;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private string _currentTrackPosition;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private int _currentVolume;
 
 		#endregion Fields
 
@@ -41,7 +45,7 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// Model 層 プロパティ
 		/// </summary>
-		public Models.Models Model { get; set; } = new Models.Models();
+		public Models.Model Model { get; set; } = new Models.Model();
 
 		/// <summary>
 		/// 
@@ -73,6 +77,15 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// 
 		/// </summary>
+		public int CurrentVolume
+		{
+			get { return this._currentVolume; }
+			set { this.SetProperty(ref this._currentVolume, value); }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public DelegateCommand CurrentTrackInfoComamnd
 		{
 			get { return this._currentTrackInfoComamnd = this._currentTrackInfoComamnd ?? new DelegateCommand(GetCurrentTrackInfo); }
@@ -80,7 +93,7 @@ namespace IcePlayer.ViewModels
 
 		#endregion Properties
 
-		#region Constractor
+		#region Constructor
 
 		/// <summary>
 		/// コンストラクタ
@@ -89,9 +102,10 @@ namespace IcePlayer.ViewModels
 		{
 			this.Model.Observer.CurrentTrackChanged += async (track) => await this._UpdateAsync(track);
 			this.Model.Observer.PositionPropertyChanged += async (position) => await this._PositionPropertyChangedAsync(position);
+			this.Model.Observer.VolumePropertyChanged += async (volume) => await this._VolumePropertyChangedAsync(volume);
 		}
 
-		#endregion Constractor
+		#endregion Constructor
 
 		#region Methods
 
@@ -100,14 +114,17 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		private void GetCurrentTrackInfo() =>
 			(this.CurrentTrackInfo, this.CurrentAlbumArt) = (this.Model.Properties.CurrentTrack, this.Model.GetAlbumArt());
-		
+
 		/// <summary>
 		/// イベント発火時、非同期にてトラック情報を更新します
 		/// </summary>
 		/// <param name="track"></param>
 		/// <returns></returns>
-		private async Task _UpdateAsync(TrackInfo track) =>
+		private async Task _UpdateAsync(TrackInfo track)
+		{
 			(this.CurrentTrackInfo, this.CurrentAlbumArt) = (track, this.Model.GetAlbumArt());
+			this.Model.CallNotification();
+		}
 
 		/// <summary>
 		/// 非同期にて曲の再生時間を更新します
@@ -116,8 +133,15 @@ namespace IcePlayer.ViewModels
 		/// <returns></returns>
 		private async Task _PositionPropertyChangedAsync(int position) =>
 			this.CurrentTrackPosition = await this.Model.GetCurrentTrackPositionAsync(position);
-		
-		#endregion Methods
 
+		/// <summary>
+		/// 非同期にて音量を更新します
+		/// </summary>
+		/// <param name="volume"></param>
+		/// <returns></returns>
+		private async Task _VolumePropertyChangedAsync(int volume) =>
+			this.CurrentVolume = await this.Model.GetCurrentVolumeAsync(volume);
+
+		#endregion Methods
 	}
 }

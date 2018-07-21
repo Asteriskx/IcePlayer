@@ -8,8 +8,7 @@ namespace IcePlayer
 	/// </summary>
 	public partial class App : Application
 	{
-
-		#region Constractor 
+		#region Constructor 
 
 		/// <summary>
 		/// 
@@ -20,9 +19,9 @@ namespace IcePlayer
 			Thread.Sleep(3000);
 		}
 
-		#endregion Constractor
+		#endregion Constructor
 
-		#region Methods
+		#region Method
 
 		/// <summary>
 		/// 
@@ -31,7 +30,6 @@ namespace IcePlayer
 		/// <param name="e"></param>
 		private void Application_Startup(object sender, StartupEventArgs e) { }
 
-		#endregion Methods
-
+		#endregion Method
 	}
 }

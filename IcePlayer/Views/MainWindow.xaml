@@ -3,11 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:v="clr-namespace:IcePlayer.Views"
         xmlns:vm="clr-namespace:IcePlayer.ViewModels"
         xmlns:ice="clr-namespace:IcePlayer.Behavior"
-        xmlns:md="cir-namespace:IcePlayer.Models"
         xmlns:Prism="http://prismlibrary.com/"
         Prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="IcePlayer.Views.MainWindow"
@@ -21,8 +18,13 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="flyout" Width="500" Header="{Binding CurrentTrackInfo.Title}" Position="Right" Theme="Dark" Opacity="0.9"/>
-            <Label Width="400" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Artist}" FontSize="14" ContentStringFormat="Artist : {0}"/>
+            <Controls:Flyout x:Name="flyout" Width="500" AutoCloseInterval="3000" IsAutoCloseEnabled="True" Header="NowPlaying Tracks." Position="Right" Theme="Dark" Opacity="0.9">
+                <Image x:Name="flyoutImage" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}">
+                    <i:Interaction.Behaviors>
+                        <ice:ImageBehavior/>
+                    </i:Interaction.Behaviors>
+                </Image>
+            </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
@@ -55,11 +57,15 @@
     <Grid Background="Black" >
 
         <!-- AlbumArt -->
-        <Image x:Name="image" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}" />
+        <Image x:Name="image" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}">
+            <i:Interaction.Behaviors>
+                <ice:ImageBehavior/>
+            </i:Interaction.Behaviors>
+        </Image>
 
         <DockPanel>
             <StatusBar Height="24" Margin="0,10,0,0" x:Name="StatusBar" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Background="#FF5F5F5F">
-                <StatusBarItem x:Name="status" Content="Waiting..." Height="21" Background="Black" />
+                <StatusBarItem x:Name="status" Content="Waiting..." Height="21" Background="Black" /> <!--Background="#7ba49b"-->
             </StatusBar>
         </DockPanel>
 
@@ -161,6 +167,6 @@
         <Label Margin="297,516,99,29" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackPosition}" FontSize="14" ContentStringFormat="Time : {0}"/>
 
         <!-- CurrentVolume Show -->
-        <Label x:Name="ShowVolume" Margin="298,493,126,54" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding ShowVolume.Value}" FontSize="14" ContentStringFormat="Vol : {0} %"/>
+        <Label x:Name="ShowVolume" Margin="297,493,127,53" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentVolume}" FontSize="14" ContentStringFormat="Vol : {0} %" Height="27"/>
     </Grid>
 </Controls:MetroWindow>

@@ -12,7 +12,6 @@ namespace IcePlayer.Models
 	/// </summary>
 	public static class BitmapConverterExtensions
 	{
-
 		#region Extern
 
 		/// <summary>
@@ -26,7 +25,7 @@ namespace IcePlayer.Models
 
 		#endregion Extern
 
-		#region Methods
+		#region Method
 
 		/// <summary>
 		/// Convert メソッド
@@ -41,10 +40,17 @@ namespace IcePlayer.Models
 				var convert = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 				return convert;
 			}
-			finally { DeleteObject(handle); }
+			catch (Exception e)
+			{
+				new Exceptions.IcePlayerException("convert to image source error:", e);
+				return null;
+			}
+			finally
+			{
+				DeleteObject(handle);
+			}
 		}
 
-		#endregion Methods
-
+		#endregion Method
 	}
 }

@@ -131,9 +131,6 @@
     <Reference Include="Prism, Version=7.1.0.172, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>packages\Prism.Core.7.1.0.172-pre\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.172, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>packages\Prism.Unity.7.1.0.172-pre\lib\net45\Prism.Unity.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Prism.Wpf, Version=7.1.0.172, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>packages\Prism.Wpf.7.1.0.172-pre\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
@@ -145,6 +142,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
@@ -159,12 +157,6 @@
     </Reference>
     <Reference Include="Twist, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Twist.4.0.0\lib\netstandard2.0\Twist.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
-      <HintPath>packages\Unity.Abstractions.3.3.0\lib\net47\Unity.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Container, Version=5.8.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>packages\Unity.Container.5.8.6\lib\net47\Unity.Container.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -192,6 +184,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behavior\FastForwardBehavior.cs" />
+    <Compile Include="Behavior\ImageBehavior.cs" />
     <Compile Include="Behavior\NowPlayingBehavior.cs" />
     <Compile Include="Behavior\PlayButtonBehavior.cs" />
     <Compile Include="Behavior\RewindBehavior.cs" />
@@ -201,9 +194,10 @@
     <Compile Include="Behavior\VolumeSliderBehavior.cs" />
     <Compile Include="Behavior\TrackInfoBehavior.cs" />
     <Compile Include="Behavior\VolumeBehavior.cs" />
+    <Compile Include="Exceptions\IcePlayerException.cs" />
     <Compile Include="Models\BitmapConverter.cs" />
-    <Compile Include="Models\Models.cs" />
-    <Compile Include="Splash\IceSplashControl.cs" />
+    <Compile Include="Models\IceSplashControl.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -227,6 +221,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -242,12 +237,8 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
     <Resource Include="Resources\WindowsIcons-license.txt" />
-    <Resource Include="image\Ast_Header.jpg" />
-    <Resource Include="Ice_Middle.ico" />
-    <SplashScreen Include="IcePlayer_splash.png" />
     <None Include="Resources\Ast_Header.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
@@ -262,6 +253,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\None.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ice_Middle.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

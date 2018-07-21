@@ -11,6 +11,8 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class PlayButtonBehavior : Behavior<ToggleButton>
 	{
+		#region Properties
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -21,13 +23,26 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		private AimpProperties _Properties { get; set; } = new AimpProperties();
 
+		#endregion Properties
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public PlayButtonBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
+
 		/// <summary>
 		/// 
 		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += Play;
+			this.AssociatedObject.Click += this._Play;
 		}
 
 		/// <summary>
@@ -36,15 +51,19 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= Play;
+			this.AssociatedObject.Click -= this._Play;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Play(object sender, EventArgs e)
+		private void _Play(object sender, EventArgs e)
 		{
 			var tgl = (ToggleButton)sender;
 
@@ -66,5 +85,7 @@ namespace IcePlayer.Behavior
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = ((bool)tgl.IsChecked) ? "Playing..." : "Pausing...";
 		}
+
+		#endregion Method
 	}
 }

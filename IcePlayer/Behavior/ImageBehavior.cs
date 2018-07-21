@@ -1,29 +1,20 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace IcePlayer.Behavior
 {
 	/// <summary>
-	/// 
+	/// 画像の処理管理クラス
 	/// </summary>
-	class NowPlayingBehavior : Behavior<Button>
+	class ImageBehavior : Behavior<Image>
 	{
-		#region Property
-
-		/// <summary>
-		/// Model 層 プロパティ
-		/// </summary>
-		public Models.Model Model { get; set; } = new Models.Model();
-
-		#endregion Property
-
 		#region Constructor
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public NowPlayingBehavior() { }
+		public ImageBehavior() { }
 
 		#endregion Constructor
 
@@ -35,7 +26,7 @@ namespace IcePlayer.Behavior
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += this._NowPlaying;
+			this.AssociatedObject.MouseDown += this._ShowImage;
 		}
 
 		/// <summary>
@@ -44,7 +35,7 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= this._NowPlaying;
+			this.AssociatedObject.MouseDown -= this._ShowImage;
 		}
 
 		#endregion Attach / Detaching
@@ -56,7 +47,8 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private async void _NowPlaying(object sender, EventArgs e) => await this.Model.PostingNowPlaying();
+		private void _ShowImage(object sender, MouseButtonEventArgs e) =>
+			new Models.Model().ShowAlbumArtWithViewer(e);
 
 		#endregion Method
 	}

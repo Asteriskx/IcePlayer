@@ -11,15 +11,34 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class VolumeBehavior : Behavior<ToggleButton>
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		private AimpCommands _Commands { get; set; } = new AimpCommands();
+		#region Field
 
 		/// <summary>
 		/// 音量保持用変数
 		/// </summary>
 		private int[] saveVolume = new int[2] { 0, 0 };
+
+		#endregion Field
+
+		#region Property
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private AimpCommands _Commands { get; set; } = new AimpCommands();
+
+		#endregion Property
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public VolumeBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
 
 		/// <summary>
 		/// 
@@ -38,6 +57,10 @@ namespace IcePlayer.Behavior
 			base.OnDetaching();
 			this.AssociatedObject.Click -= GetVolume;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
@@ -71,5 +94,7 @@ namespace IcePlayer.Behavior
 				window.status.Content = "unMuted...";
 			}
 		}
+
+		#endregion Method
 	}
 }

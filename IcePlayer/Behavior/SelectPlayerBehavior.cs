@@ -10,6 +10,8 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class SelectPlayerBehavior : Behavior<Button>
 	{
+		#region Properties
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -20,13 +22,26 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		private AimpProperties _Properties { get; set; } = new AimpProperties();
 
+		#endregion Properties
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public SelectPlayerBehavior() { }
+
+		#endregion Constuctor
+
+		#region Attach / Detaching
+
 		/// <summary>
 		/// 
 		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += SelectPlayer;
+			this.AssociatedObject.Click += this._SelectPlayer;
 		}
 
 		/// <summary>
@@ -35,20 +50,20 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= SelectPlayer;
+			this.AssociatedObject.Click -= this._SelectPlayer;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SelectPlayer(object sender, EventArgs e)
-		{
-			if (!_Properties.IsRunning)
-			{
-				this._Commands.StartAimp();
-			}
-		}
+		private void _SelectPlayer(object sender, EventArgs e) => this._Commands.StartAimp();
+
+		#endregion Method
 	}
 }

@@ -11,7 +11,25 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class SkipBackwardBehavior : Behavior<ToggleButton>
 	{
+		#region Property
+
+		/// <summary>
+		/// 
+		/// </summary>
 		private AimpCommands _Commands { get; set; } = new AimpCommands();
+
+		#endregion Property
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public SkipBackwardBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
 
 		/// <summary>
 		/// 
@@ -19,7 +37,7 @@ namespace IcePlayer.Behavior
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += BackWord;
+			this.AssociatedObject.Click += this._BackWord;
 		}
 
 		/// <summary>
@@ -28,19 +46,25 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= BackWord;
+			this.AssociatedObject.Click -= this._BackWord;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void BackWord(object sender, EventArgs e)
+		private void _BackWord(object sender, EventArgs e)
 		{
 			// TODO : 巻き戻し処理実装に関しては、Legato 側の巻き戻し実装後に行う
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = "Skipping Backward...";
 		}
+
+		#endregion Method
 	}
 }

@@ -11,6 +11,8 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class RewindBehavior : Behavior<ToggleButton>
 	{
+		#region Properties
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -21,13 +23,26 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		private AimpProperties _Properties { get; set; } = new AimpProperties();
 
+		#endregion Properties
+
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public RewindBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
+
 		/// <summary>
 		/// 
 		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += Rewind;
+			this.AssociatedObject.Click += this._Rewind;
 		}
 
 		/// <summary>
@@ -36,15 +51,19 @@ namespace IcePlayer.Behavior
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= Rewind;
+			this.AssociatedObject.Click -= this._Rewind;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Rewind(object sender, EventArgs e)
+		private void _Rewind(object sender, EventArgs e)
 		{
 			if (_Properties.IsRunning)
 			{
@@ -53,5 +72,7 @@ namespace IcePlayer.Behavior
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = "Rewind...";
 		}
+
+		#endregion Method
 	}
 }

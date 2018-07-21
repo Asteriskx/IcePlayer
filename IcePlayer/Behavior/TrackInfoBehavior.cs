@@ -10,33 +10,50 @@ namespace IcePlayer.Behavior
 	/// </summary>
 	class TrackInfoBehavior : Behavior<Button>
 	{
+		#region Constructor
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public TrackInfoBehavior() { }
+
+		#endregion Constructor
+
+		#region Attach / Detaching
+
 		/// <summary>
 		/// 
 		/// </summary>
 		protected override void OnAttached()
 		{
 			base.OnAttached();
-			this.AssociatedObject.Click += Open;
+			this.AssociatedObject.Click += this._Open;
 		}
-		
+
 		/// <summary>
 		/// 
 		/// </summary>
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();
-			this.AssociatedObject.Click -= Open;
+			this.AssociatedObject.Click -= this._Open;
 		}
+
+		#endregion Attach / Detaching
+
+		#region Method
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Open(object sender, EventArgs e)
+		private void _Open(object sender, EventArgs e)
 		{
 			var window = (MainWindow)App.Current.MainWindow;
 			window.flyout.IsOpen = true;
 		}
+
+		#endregion Method
 	}
 }

@@ -61,11 +61,21 @@ namespace IcePlayer.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Ice_Middle {
+            get {
+                object obj = ResourceManager.GetObject("Ice_Middle", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Ast_Header {
+        internal static System.Drawing.Bitmap None {
             get {
-                object obj = ResourceManager.GetObject("Ast_Header", resourceCulture);
+                object obj = ResourceManager.GetObject("None", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
