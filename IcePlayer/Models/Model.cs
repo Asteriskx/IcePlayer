@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace IcePlayer.Models
 {
@@ -272,6 +273,21 @@ namespace IcePlayer.Models
 			{
 				throw new IcePlayerException("posting nowplaying error:", e);
 			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void DoEvents()
+		{
+			var frame = new DispatcherFrame();
+			var callback = new DispatcherOperationCallback(obj =>
+			{
+				((DispatcherFrame)obj).Continue = false;
+				return null;
+			});
+			Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, callback, frame);
+			Dispatcher.PushFrame(frame);
 		}
 
 		#endregion Methods

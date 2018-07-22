@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
 using System.Windows.Interactivity;
 using IcePlayer.Views;
 using Legato;
@@ -7,18 +7,23 @@ using Legato;
 namespace IcePlayer.Behavior
 {
 	/// <summary>
-	/// 巻き戻しボタンが押下された時の処理
+	/// 曲戻しボタンが押下された時の処理
 	/// </summary>
-	class SkipBackwardBehavior : Behavior<ToggleButton>
+	class SkipBackwardBehavior : Behavior<Button>
 	{
-		#region Property
+		#region Properties
 
 		/// <summary>
 		/// 
 		/// </summary>
 		private AimpCommands _Commands { get; set; } = new AimpCommands();
 
-		#endregion Property
+		/// <summary>
+		/// 
+		/// </summary>
+		private AimpProperties _Properties { get; set; } = new AimpProperties();
+
+		#endregion Properties
 
 		#region Constructor
 
@@ -60,7 +65,10 @@ namespace IcePlayer.Behavior
 		/// <param name="e"></param>
 		private void _BackWord(object sender, EventArgs e)
 		{
-			// TODO : 巻き戻し処理実装に関しては、Legato 側の巻き戻し実装後に行う
+			if (_Properties.IsRunning)
+			{
+				this._Commands.Prev();
+			}
 			var window = (MainWindow)App.Current.MainWindow;
 			window.status.Content = "Skipping Backward...";
 		}

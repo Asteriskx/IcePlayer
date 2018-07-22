@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
 using System.Windows.Interactivity;
 using IcePlayer.Views;
 using Legato;
@@ -9,7 +9,7 @@ namespace IcePlayer.Behavior
 	/// <summary>
 	/// 早送りボタンが押下された時の処理
 	/// </summary>
-	class FastForwardBehavior : Behavior<ToggleButton>
+	class FastForwardBehavior : Behavior<Button>
 	{
 		#region Property
 

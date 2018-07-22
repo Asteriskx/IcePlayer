@@ -73,6 +73,16 @@ namespace IcePlayer.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap IcePlayer_splash {
+            get {
+                object obj = ResourceManager.GetObject("IcePlayer_splash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap None {
             get {
                 object obj = ResourceManager.GetObject("None", resourceCulture);

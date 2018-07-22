@@ -62,7 +62,11 @@ namespace IcePlayer.Behavior
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void _SelectPlayer(object sender, EventArgs e) => this._Commands.StartAimp();
+		private void _SelectPlayer(object sender, EventArgs e)
+		{
+			this._Commands.StartAimp();
+			new Models.Model().DoEvents();
+		}
 
 		#endregion Method
 	}

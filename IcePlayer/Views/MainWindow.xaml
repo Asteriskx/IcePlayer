@@ -17,13 +17,26 @@
         WindowStartupLocation="CenterScreen" WindowTitleBrush="Black" NonActiveWindowTitleBrush="Black" Icon="/IcePlayer;component/Ice_Middle.ico">
 
     <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="flyout" Width="500" AutoCloseInterval="3000" IsAutoCloseEnabled="True" Header="NowPlaying Tracks." Position="Right" Theme="Dark" Opacity="0.9">
-                <Image x:Name="flyoutImage" Height="330" VerticalAlignment="Top" Width="396" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}">
-                    <i:Interaction.Behaviors>
-                        <ice:ImageBehavior/>
-                    </i:Interaction.Behaviors>
-                </Image>
+        <Controls:FlyoutsControl>/
+            <Controls:Flyout x:Name="flyout" Width="500" AutoCloseInterval="5000" IsAutoCloseEnabled="True" Header="NowPlaying Tracks." Position="Right" Theme="Dark" Opacity="0.9">
+                <StackPanel Margin="48,15,48,0">
+                    <Image x:Name="flyoutImage" VerticalAlignment="Top" Height="200" Width="200" Margin="48,15,48,0" Source="{Binding CurrentAlbumArt}">
+                        <i:Interaction.Behaviors>
+                            <ice:ImageBehavior/>
+                        </i:Interaction.Behaviors>
+                    </Image>
+                    <!-- Title Info -->
+                    <Label x:Name="TitleInfo" Width="400" Margin="5" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Title}" FontSize="14" ContentStringFormat="Title : {0}"/>
+                    
+                    <!-- Artist Info -->
+                    <Label x:Name="ArtistInfo" Width="400" Margin="2" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Artist}" FontSize="14" ContentStringFormat="Artist : {0}"/>
+
+                    <!-- Album Info -->
+                    <Label x:Name="AlbumInfo" Width="400" Margin="2" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Album}" FontSize="14" ContentStringFormat="Album : {0}"/>
+
+                    <!-- Genre Info -->
+                    <Label x:Name="GenreInfo" Width="400" Margin="2" Foreground="White" FontFamily="小塚ゴシック pro L" Content="{Binding CurrentTrackInfo.Genre}" FontSize="14" ContentStringFormat="Genre : {0}"/>
+                </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
@@ -63,14 +76,16 @@
             </i:Interaction.Behaviors>
         </Image>
 
+        <!-- StatusBar -->
         <DockPanel>
             <StatusBar Height="24" Margin="0,10,0,0" x:Name="StatusBar" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Background="#FF5F5F5F">
                 <StatusBarItem x:Name="status" Content="Waiting..." Height="21" Background="Black" /> <!--Background="#7ba49b"-->
             </StatusBar>
         </DockPanel>
-
-        <StackPanel Orientation="Horizontal" Margin="40,480,195,35"  >
-            <ToggleButton x:Name="SkipBackwardButton" Width="50" Height="50"  BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
+        
+        <!-- Toggle Buttons -->
+        <StackPanel Orientation="Horizontal" Margin="40,480,195,35">
+            <Button x:Name="SkipBackwardButton" Width="50" Height="50"  BorderBrush="White" Style="{DynamicResource MetroCircleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <ice:SkipBackwardBehavior/>
                 </i:Interaction.Behaviors>
@@ -79,9 +94,9 @@
                         <VisualBrush Visual="{StaticResource appbar_control_skip_backward}" />
                     </Rectangle.Fill>
                 </Rectangle>
-            </ToggleButton>
+            </Button>
 
-            <ToggleButton x:Name="RewindButton" Width="50" Height="50"  BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
+            <Button x:Name="RewindButton" Width="50" Height="50"  BorderBrush="White" Style="{DynamicResource MetroCircleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <ice:RewindBehavior/>
                 </i:Interaction.Behaviors>
@@ -90,7 +105,7 @@
                         <VisualBrush Visual="{StaticResource appbar_control_rewind}" />
                     </Rectangle.Fill>
                 </Rectangle>
-            </ToggleButton>
+            </Button>
 
             <ToggleButton Command="{Binding CurrentTrackInfoComamnd}" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
@@ -103,7 +118,7 @@
                 </Rectangle>
             </ToggleButton>
 
-            <ToggleButton x:Name="FastForwardButton" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
+            <Button x:Name="FastForwardButton" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <ice:FastForwardBehavior/>
                 </i:Interaction.Behaviors>
@@ -115,9 +130,9 @@
                         <VisualBrush Visual="{StaticResource appbar_control_fastforward}" />
                     </Rectangle.Fill>
                 </Rectangle>
-            </ToggleButton>
+            </Button>
 
-            <ToggleButton x:Name="SkipForwardButton" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center">
+            <Button x:Name="SkipForwardButton" Width="50" Height="50" BorderBrush="White" Style="{DynamicResource MetroCircleButtonStyle}" HorizontalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <ice:SkipForwardBehavior/>
                 </i:Interaction.Behaviors>
@@ -126,7 +141,7 @@
                         <VisualBrush Visual="{StaticResource appbar_control_skip_forward}" />
                     </Rectangle.Fill>
                 </Rectangle>
-            </ToggleButton>
+            </Button>
         </StackPanel>
 
         <ToggleButton x:Name="VolumeButton" Width="41" BorderBrush="White" Style="{DynamicResource MetroCircleToggleButtonStyle}" HorizontalAlignment="Center" Margin="403,492,46,35">

@@ -196,7 +196,6 @@
     <Compile Include="Behavior\VolumeBehavior.cs" />
     <Compile Include="Exceptions\IcePlayerException.cs" />
     <Compile Include="Models\BitmapConverter.cs" />
-    <Compile Include="Models\IceSplashControl.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -259,6 +258,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Ice_Middle.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\IcePlayer_splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
