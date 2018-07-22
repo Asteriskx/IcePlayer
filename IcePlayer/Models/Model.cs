@@ -86,39 +86,30 @@ namespace IcePlayer.Models
 		{
 			try
 			{
-				using (var ms = new MemoryStream())
-				{
-					var bitmap = this.GetBitmap();
-					bitmap.Save(ms, ImageFormat.Bmp);
-
-					ms.Position = 0;
-					var image = new BitmapImage();
-
-					image.BeginInit();
-					image.CacheOption = BitmapCacheOption.OnLoad;
-					image.CreateOptions = BitmapCreateOptions.None;
-
-					image.StreamSource = ms;
-					image.EndInit();
-					image.Freeze();
-
-					return image;
-				}
+				var albumArt = this._GetBitmapImage(this.GetBitmap());
+				return albumArt;
 			}
 			catch (Exception e)
 			{
-				new IcePlayerException("album art extraction error:", e);
+				new IcePlayerException("get album art error:", e);
+				return this._GetBitmapImage(Resources.None);
+			}
+		}
 
-				var image = new BitmapImage();
-				image.BeginInit();
-				image.CacheOption = BitmapCacheOption.OnLoad;
-				image.CreateOptions = BitmapCreateOptions.None;
-
-				image.UriSource = new Uri("pack://application:,,,/None.png", UriKind.Absolute);
-				image.EndInit();
-				image.Freeze();
-
-				return image;
+		/// <summary>
+		/// Bitmap を取得します
+		/// </summary>
+		/// <returns>アルバムアート：Bitmap形式</returns>
+		public Bitmap GetBitmap()
+		{
+			try 
+			{
+				var stream = this.GetAlbumArtStream();
+				return new Bitmap(stream); 
+			}
+			catch (Exception e) 
+			{
+				throw new IcePlayerException("get bitmap error:", e); 
 			}
 		}
 
@@ -133,29 +124,42 @@ namespace IcePlayer.Models
 				var trackFilePath = this.Properties.CurrentTrack.FilePath;
 				var selector = new Selector();
 				var extractor = selector.SelectAlbumArtExtractor(trackFilePath);
-				return extractor.Extract(trackFilePath);
+				var stream = extractor.Extract(trackFilePath);
+				return stream;
 			}
 			catch (Exception e)
 			{
-				new IcePlayerException("Get album art stream error:", e);
-				return null;
+				throw new IcePlayerException("Get album art stream error:", e);
 			}
 		}
 
 		/// <summary>
-		/// Bitmap を取得します
+		/// BitmapImage を取得します
 		/// </summary>
-		/// <returns>アルバムアート：Bitmap形式</returns>
-		public Bitmap GetBitmap()
+		/// <returns>アルバムアート：BitmapImage形式</returns>
+		private BitmapImage _GetBitmapImage(Bitmap bitmap)
 		{
 			try
 			{
-				return new Bitmap(this.GetAlbumArtStream());
+				using (MemoryStream ms = new MemoryStream())
+				{
+					bitmap.Save(ms, ImageFormat.Bmp);
+					ms.Position = 0;
+
+					var image = new BitmapImage();
+					image.BeginInit();
+					image.CacheOption = BitmapCacheOption.OnLoad;
+					image.CreateOptions = BitmapCreateOptions.None;
+					image.StreamSource = ms;
+					image.EndInit();
+					image.Freeze();
+
+					return image;
+				}
 			}
 			catch (Exception e)
 			{
-				new IcePlayerException("get bitmap error:", e);
-				return null;
+				throw new IcePlayerException("get bitmapImage error:", e);
 			}
 		}
 
@@ -197,16 +201,16 @@ namespace IcePlayer.Models
 				}
 
 				using (var source = (MemoryStream)this.GetAlbumArtStream())
-				using (var stream = new FileStream("temp.jpg", FileMode.OpenOrCreate, FileAccess.Write))
+				using (var stream = new FileStream("cover.jpg", FileMode.OpenOrCreate, FileAccess.Write))
 				{
 					stream.Write(source.ToArray(), 0, (int)source.Length);
 				}
 
-				Process.Start("temp.jpg");
+				Process.Start("cover.jpg");
 			}
 			catch (Exception ex)
 			{
-				new IcePlayerException("show albumart viewer error:", ex);
+				throw new IcePlayerException("show albumart viewer error:", ex);
 			}
 		}
 
@@ -244,7 +248,7 @@ namespace IcePlayer.Models
 			}
 			catch (Exception e)
 			{
-				new IcePlayerException("notify error:", e);
+				throw new IcePlayerException("notify error:", e);
 			}
 		}
 
@@ -266,7 +270,7 @@ namespace IcePlayer.Models
 			}
 			catch (Exception e)
 			{
-				new IcePlayerException("posting nowplaying error:", e);
+				throw new IcePlayerException("posting nowplaying error:", e);
 			}
 		}
 
