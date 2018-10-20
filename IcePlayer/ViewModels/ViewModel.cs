@@ -1,6 +1,9 @@
 ﻿using Legato.Interop.AimpRemote.Entities;
+using Legato.Interop.AimpRemote.Enum;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
@@ -52,8 +55,8 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		public TrackInfo CurrentTrackInfo
 		{
-			get { return this._currentTrackInfo; }
-			set { this.SetProperty(ref this._currentTrackInfo, value); }
+			get => this._currentTrackInfo;
+			set => this.SetProperty(ref this._currentTrackInfo, value); 
 		}
 
 		/// <summary>
@@ -61,8 +64,8 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		public BitmapImage CurrentAlbumArt
 		{
-			get { return this._currentAlbumArt; }
-			set { this.SetProperty(ref this._currentAlbumArt, value); }
+			get => this._currentAlbumArt; 
+			set => this.SetProperty(ref this._currentAlbumArt, value);
 		}
 
 		/// <summary>
@@ -70,8 +73,8 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		public string CurrentTrackPosition
 		{
-			get { return this._currentTrackPosition; }
-			set { this.SetProperty(ref this._currentTrackPosition, value); }
+			get => this._currentTrackPosition;
+			set => this.SetProperty(ref this._currentTrackPosition, value);
 		}
 
 		/// <summary>
@@ -79,8 +82,8 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		public int CurrentVolume
 		{
-			get { return this._currentVolume; }
-			set { this.SetProperty(ref this._currentVolume, value); }
+			get => this._currentVolume;
+			set => this.SetProperty(ref this._currentVolume, value);
 		}
 
 		/// <summary>
@@ -88,7 +91,8 @@ namespace IcePlayer.ViewModels
 		/// </summary>
 		public DelegateCommand CurrentTrackInfoComamnd
 		{
-			get { return this._currentTrackInfoComamnd = this._currentTrackInfoComamnd ?? new DelegateCommand(GetCurrentTrackInfo); }
+			get => this._currentTrackInfoComamnd 
+				= this._currentTrackInfoComamnd ?? new DelegateCommand(GetCurrentTrackInfo);
 		}
 
 		#endregion Properties
@@ -98,16 +102,21 @@ namespace IcePlayer.ViewModels
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public ViewModels()
+		public ViewModels() => this._Initialize();
+		
+		#endregion Constructor
+
+		#region Methods
+
+		/// <summary>
+		/// （　＾ω＾）・・・
+		/// </summary>
+		private void _Initialize()
 		{
 			this.Model.Observer.CurrentTrackChanged += async (track) => await this._UpdateAsync(track);
 			this.Model.Observer.PositionPropertyChanged += async (position) => await this._PositionPropertyChangedAsync(position);
 			this.Model.Observer.VolumePropertyChanged += async (volume) => await this._VolumePropertyChangedAsync(volume);
 		}
-
-		#endregion Constructor
-
-		#region Methods
 
 		/// <summary>
 		/// 現在のトラック情報（曲情報、アルバムアート）を取得します
@@ -123,7 +132,7 @@ namespace IcePlayer.ViewModels
 		private async Task _UpdateAsync(TrackInfo track)
 		{
 			(this.CurrentTrackInfo, this.CurrentAlbumArt) = (track, this.Model.GetAlbumArt());
-			this.Model.CallNotification();
+			await this.Model.CallNotificationAsync();
 		}
 
 		/// <summary>
